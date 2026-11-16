@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure Badi Twalib school management portal.">
+    <title>School portal · Badi Twalib Comprehensive School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --background: #faf9f6;
+            --foreground: #153135;
+            --primary: #143b3d;
+            --accent: #aa762d;
+            --muted: #647274;
+            --border: #e4e0d8;
+            --card: #ffffff;
+            --heading: "Fraunces", Georgia, serif;
+            --body: "Inter", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--body);
+            line-height: 1.5;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #c9974e;
+            outline-offset: 2px;
+        }
+
+        .portal-header {
+            position: sticky;
+            top: 0;
+            z-index: 4;
+            display: flex;
+            min-height: 68px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid var(--border);
+            background: rgb(250 249 246 / 94%);
+            padding: 10px 24px;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--foreground);
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--primary);
+            color: white;
+        }
+
+        .brand-mark svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .brand-name {
+            display: block;
+            font-family: var(--heading);
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .brand-caption {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-identity {
+            display: grid;
+            text-align: right;
+        }
+
+        .user-identity strong {
+            font-size: 12px;
+        }
+
+        .user-identity span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .sign-out {
+            min-height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            color: var(--foreground);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 12px;
+        }
+
+        .sign-out:hover {
+            border-color: var(--primary);
+        }
+
+        .app-shell {
+            display: grid;
+            width: min(100% - 32px, 1240px);
+            grid-template-columns: 220px minmax(0, 1fr);
+            gap: 24px;
+            margin: 24px auto 40px;
+        }
+
+        .sidebar {
+            align-self: start;
+            position: sticky;
+            top: 92px;
+            display: grid;
+            gap: 7px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--card);
+            padding: 14px;
+        }
+
+        .sidebar-label {
+            margin: 3px 8px 6px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .nav-button {
+            min-height: 40px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: #536365;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .nav-button:hover,
+        .nav-button[aria-current="page"] {
+            background: #edf2ef;
+            color: var(--primary);
+        }
+
+        .workspace {
+            min-width: 0;
+        }
+
+        .page-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 3px 0 20px;
+        }
+
+        .eyebrow {
+            margin: 0 0 4px;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            font-family: var(--heading);
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: clamp(26px, 4vw, 36px);
+            letter-spacing: -.025em;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: 21px;
+        }
+
+        h3 {
+            font-size: 17px;
+        }
+
+        .page-description {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .panel,
+        .stat-card {
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: var(--card);
+            box-shadow: 0 12px 30px -28px rgb(21 38 40 / 38%);
+        }
+
+        .panel {
+            margin-bottom: 16px;
+            padding: 20px;
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .panel-heading p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            padding: 17px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            display: block;
+            margin-top: 6px;
+            font-family: var(--heading);
+            font-size: 29px;
+            line-height: 1;
+        }
+
+        .stat-caption {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 12px;
+        }
+
+        .quick-actions button {
+            min-height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 12px;
+        }
+
+        .quick-actions button:hover {
+            background: #edf2ef;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .field {
+            display: grid;
+            gap: 5px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            color: #405457;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            min-height: 38px;
+            border: 1px solid #d5d9d4;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--foreground);
+            font-size: 12px;
+            padding: 8px 10px;
+        }
+
+        textarea {
+            min-height: 72px;
+            resize: vertical;
+        }
+
+        .primary-button {
+            min-height: 39px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 15px;
+        }
+
+        .primary-button:hover {
+            background: #205458;
+        }
+
+        .primary-button:disabled {
+            cursor: wait;
+            opacity: .6;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 13px;
+        }
+
+        .inline-notice {
+            min-height: 0;
+            margin: 10px 0 0;
+            color: #286142;
+            font-size: 12px;
+        }
+
+        .inline-notice:empty {
+            display: none;
+        }
+
+        .inline-notice.error {
+            color: #9c3d31;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #eeece7;
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f7f6f2;
+            color: #536365;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .empty-cell {
+            color: var(--muted);
+            text-align: center;
+            padding: 24px;
+        }
+
+        .setup-card,
+        .error-card,
+        .loading-card {
+            width: min(100% - 32px, 680px);
+            margin: 12vh auto;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: #fff;
+            padding: 26px;
+        }
+
+        .setup-card p,
+        .error-card p,
+        .loading-card p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .setup-card a,
+        .error-card a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .app-shell {
+                grid-template-columns: 185px minmax(0, 1fr);
+                gap: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .portal-header {
+                padding-inline: 14px;
+            }
+
+            .user-identity {
+                display: none;
+            }
+
+            .app-shell {
+                width: min(100% - 24px, 1240px);
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 14px;
+            }
+
+            .sidebar {
+                position: static;
+                display: flex;
+                overflow-x: auto;
+                gap: 4px;
+                padding: 8px;
+            }
+
+            .sidebar-label {
+                display: none;
+            }
+
+            .nav-button {
+                flex: 0 0 auto;
+                min-height: 36px;
+                font-size: 11px;
+                padding-inline: 9px;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+
+            .page-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .stats-grid,
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card {
+                padding: 13px;
+            }
+
+            .stat-value {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="portal-header" id="portal-header" hidden>
+        <a class="brand" href="school.html">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m2 9 10-5 10 5-10 5L2 9Z"></path>
+                    <path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path>
+                </svg>
+            </span>
+            <span>
+                <span class="brand-name">Badi Twalib</span>
+                <span class="brand-caption">School portal</span>
+            </span>
+        </a>
+        <div class="user-menu">
+            <div class="user-identity">
+                <strong id="user-name"></strong>
+                <span id="user-role"></span>
+            </div>
+            <button class="sign-out" id="sign-out" type="button">Sign out</button>
+        </div>
+    </header>
+
+    <section class="setup-card" id="setup-required" hidden>
+        <p class="eyebrow">Portal setup required</p>
+        <h1>Connect the school database</h1>
+        <p>Add the Supabase project URL and public anon/publishable key to <code>auth-config.js</code>, then run <code>supabase-schema.sql</code> in that project's SQL editor. No student data is stored in this local page.</p>
+        <a href="school.html">Return to the school website</a>
+    </section>
+
+    <section class="loading-card" id="loading" hidden>
+        <h1>Loading your portal</h1>
+        <p>Checking your account permissions…</p>
+    </section>
+
+    <section class="error-card" id="access-error" hidden>
+        <p class="eyebrow">Portal access</p>
+        <h1 id="error-title">We couldn't open your portal</h1>
+        <p id="error-detail"></p>
+        <a href="login.html">Return to sign in</a>
+    </section>
+
+    <div class="app-shell" id="app" hidden>
+        <aside class="sidebar" aria-label="Portal sections">
+            <p class="sidebar-label">Workspace</p>
+            <nav id="portal-nav"></nav>
+        </aside>
+
+        <main class="workspace">
+            <div class="page-heading">
+                <div>
+                    <p class="eyebrow" id="role-eyebrow">School portal</p>
+                    <h1 id="page-title">Overview</h1>
+                    <p class="page-description" id="page-description"></p>
+                </div>
+            </div>
+
+            <section class="portal-page" data-page="overview">
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <span class="stat-label">Students in view</span>
+                        <strong class="stat-value" id="stat-students">—</strong>
+                        <span class="stat-caption">Based on your account access</span>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-label">Attendance records</span>
+                        <strong class="stat-value" id="stat-attendance">—</strong>
+                        <span class="stat-caption">Visible to your role</span>
+                    </article>
+                    <article class="stat-card" data-stat="fees">
+                        <span class="stat-label">Fee records</span>
+                        <strong class="stat-value" id="stat-fees">—</strong>
+                        <span class="stat-caption">Visible to leaders and linked parents</span>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-label">Grade records</span>
+                        <strong class="stat-value" id="stat-grades">—</strong>
+                        <span class="stat-caption">Visible to your role</span>
+                    </article>
+                </div>
+                <section class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2 id="welcome-title">Welcome</h2>
+                            <p id="welcome-description"></p>
+                        </div>
+                    </div>
+                    <div class="quick-actions" id="quick-actions"></div>
+                </section>
+                <p class="inline-notice" id="overview-notice" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="portal-page" data-page="students" hidden>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Add a student</h2>
+                            <p>Student records are visible only to authorized staff and linked parents.</p>
+                        </div>
+                    </div>
+                    <form id="student-form">
+                        <div class="form-grid">
+                            <div class="field"><label for="student-admission">Admission number</label><input id="student-admission" name="admission_no" required></div>
+                            <div class="field"><label for="student-name">Full name</label><input id="student-name" name="full_name" required></div>
+                            <div class="field"><label for="student-class">Class</label><input id="student-class" name="class_name" list="class-options" required></div>
+                        </div>
+                        <datalist id="class-options"></datalist>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save student</button></div>
+                        <p class="inline-notice" id="student-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Student records</h2><p>Only records permitted for your role appear here.</p></div></div>
+                    <div class="table-wrap"><table id="students-table"></table></div>
+                </section>
+            </section>
+
+            <section class="portal-page" data-page="attendance" hidden>
+                <section class="panel" data-form="teacher">
+                    <div class="panel-heading"><div><h2>Record attendance</h2><p>Staff can record attendance only for assigned classes.</p></div></div>
+                    <form id="attendance-form">
+                        <div class="form-grid">
+                            <div class="field full"><label for="attendance-student">Student</label><select id="attendance-student" name="student_id" required></select></div>
+                            <div class="field"><label for="attendance-date">Date</label><input id="attendance-date" name="attended_on" type="date" required></div>
+                            <div class="field"><label for="attendance-status">Status</label><select id="attendance-status" name="status" required><option value="present">Present</option><option value="absent">Absent</option><option value="late">Late</option><option value="excused">Excused</option></select></div>
+                            <div class="field full"><label for="attendance-notes">Notes (optional)</label><input id="attendance-notes" name="notes"></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save attendance</button></div>
+                        <p class="inline-notice" id="attendance-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Attendance history</h2><p>Recent attendance for students available to your account.</p></div></div>
+                    <div class="table-wrap"><table id="attendance-table"></table></div>
+                </section>
+            </section>
+
+            <section class="portal-page" data-page="fees" hidden>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading"><div><h2>Update fee record</h2><p>Financial records are restricted to school leaders and each student's linked parent.</p></div></div>
+                    <form id="fee-form">
+                        <div class="form-grid">
+                            <div class="field full"><label for="fee-student">Student</label><select id="fee-student" name="student_id" required></select></div>
+                            <div class="field"><label for="fee-year">Academic year</label><input id="fee-year" name="academic_year" placeholder="2026" required></div>
+                            <div class="field"><label for="fee-term">Term</label><select id="fee-term" name="term" required><option>Term 1</option><option>Term 2</option><option>Term 3</option></select></div>
+                            <div class="field"><label for="fee-due-date">Due date</label><input id="fee-due-date" name="due_date" type="date"></div>
+                            <div class="field"><label for="fee-amount-due">Amount due (KES)</label><input id="fee-amount-due" name="amount_due" type="number" min="0" step="0.01" required></div>
+                            <div class="field"><label for="fee-amount-paid">Amount paid (KES)</label><input id="fee-amount-paid" name="amount_paid" type="number" min="0" step="0.01" value="0" required></div>
+                            <div class="field full"><label for="fee-notes">Notes (optional)</label><input id="fee-notes" name="notes"></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save fee record</button></div>
+                        <p class="inline-notice" id="fee-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Fee records</h2><p>Parents see only records for children linked to their account.</p></div></div>
+                    <div class="table-wrap"><table id="fees-table"></table></div>
+                </section>
+            </section>
+
+            <section class="portal-page" data-page="grades" hidden>
+                <section class="panel" data-form="teacher">
+                    <div class="panel-heading"><div><h2>Record a grade</h2><p>Staff can record grades only for students in assigned classes.</p></div></div>
+                    <form id="grade-form">
+                        <div class="form-grid">
+                            <div class="field full"><label for="grade-student">Student</label><select id="grade-student" name="student_id" required></select></div>
+                            <div class="field"><label for="grade-subject">Subject</label><input id="grade-subject" name="subject" required></div>
+                            <div class="field"><label for="grade-assessment">Assessment</label><input id="grade-assessment" name="assessment" required></div>
+                            <div class="field"><label for="grade-score">Score</label><input id="grade-score" name="score" type="number" min="0" step="0.01" required></div>
+                            <div class="field"><label for="grade-max-score">Maximum score</label><input id="grade-max-score" name="max_score" type="number" min="0.01" step="0.01" value="100" required></div>
+                            <div class="field"><label for="grade-date">Date</label><input id="grade-date" name="graded_on" type="date" required></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save grade</button></div>
+                        <p class="inline-notice" id="grade-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Grades and report records</h2><p>Parents can view grades for their linked children.</p></div></div>
+                    <div class="table-wrap"><table id="grades-table"></table></div>
+                </section>
+            </section>
+
+            <section class="portal-page" data-page="timetable" hidden>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading"><div><h2>Add a timetable entry</h2><p>Leaders can publish classes, subjects, times and rooms.</p></div></div>
+                    <form id="timetable-form">
+                        <div class="form-grid">
+                            <div class="field"><label for="timetable-class">Class</label><input id="timetable-class" name="class_name" list="class-options" required></div>
+                            <div class="field"><label for="timetable-subject">Subject</label><input id="timetable-subject" name="subject" required></div>
+                            <div class="field"><label for="timetable-day">Day</label><select id="timetable-day" name="weekday" required><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="7">Sunday</option></select></div>
+                            <div class="field"><label for="timetable-room">Room</label><input id="timetable-room" name="room"></div>
+                            <div class="field"><label for="timetable-start">Starts</label><input id="timetable-start" name="starts_at" type="time" required></div>
+                            <div class="field"><label for="timetable-end">Ends</label><input id="timetable-end" name="ends_at" type="time" required></div>
+                            <div class="field full"><label for="timetable-teacher">Teacher (optional)</label><select id="timetable-teacher" name="teacher_id"></select></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save timetable entry</button></div>
+                        <p class="inline-notice" id="timetable-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Class timetable</h2><p>Parents see schedules for their linked children's classes.</p></div></div>
+                    <div class="table-wrap"><table id="timetable-table"></table></div>
+                </section>
+            </section>
+
+            <section class="portal-page" data-page="staff" hidden>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading"><div><h2>Assign a class and subject</h2><p>Teachers can access only classes assigned here.</p></div></div>
+                    <form id="assignment-form">
+                        <div class="form-grid">
+                            <div class="field full"><label for="assignment-staff">Staff member</label><select id="assignment-staff" name="staff_id" required></select></div>
+                            <div class="field"><label for="assignment-class">Class</label><input id="assignment-class" name="class_name" list="class-options" required></div>
+                            <div class="field"><label for="assignment-subject">Subject</label><input id="assignment-subject" name="subject" required></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Save assignment</button></div>
+                        <p class="inline-notice" id="assignment-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel" data-form="headteacher">
+                    <div class="panel-heading"><div><h2>Manage account roles</h2><p>New accounts default to parent. Only the headteacher can grant staff or leadership access.</p></div></div>
+                    <form id="role-form">
+                        <div class="form-grid">
+                            <div class="field"><label for="role-user">Account</label><select id="role-user" name="target_user" required></select></div>
+                            <div class="field"><label for="role-choice">Role</label><select id="role-choice" name="next_role" required><option value="parent">Parent</option><option value="staff">Staff</option><option value="deputy_headteacher">Deputy headteacher</option><option value="headteacher">Headteacher</option></select></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Update role</button></div>
+                        <p class="inline-notice" id="role-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading"><div><h2>Link a parent to a student</h2><p>Parent accounts can only see children linked by school leadership.</p></div></div>
+                    <form id="parent-link-form">
+                        <div class="form-grid">
+                            <div class="field"><label for="parent-account">Parent account</label><select id="parent-account" name="parent_id" required></select></div>
+                            <div class="field"><label for="linked-student">Student</label><select id="linked-student" name="student_id" required></select></div>
+                        </div>
+                        <div class="form-actions"><button class="primary-button" type="submit">Link parent</button></div>
+                        <p class="inline-notice" id="parent-link-notice" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading"><div><h2>Staff accounts</h2><p>Account roles and class assignments are enforced by the database.</p></div></div>
+                    <div class="table-wrap"><table id="staff-table"></table></div>
+                </section>
+                <section class="panel" data-form="leader">
+                    <div class="panel-heading"><div><h2>Parent-student links</h2><p>Use this list to check which students a parent can access.</p></div></div>
+                    <div class="table-wrap"><table id="parent-links-table"></table></div>
+                </section>
+            </section>
+
+            <p class="inline-notice" id="page-notice" role="status" aria-live="polite"></p>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="auth-config.js"></script>
+    <script>
+        const setupRequired = document.querySelector("#setup-required");
+        const loadingPanel = document.querySelector("#loading");
+        const accessError = document.querySelector("#access-error");
+        const errorTitle = document.querySelector("#error-title");
+        const errorDetail = document.querySelector("#error-detail");
+        const app = document.querySelector("#app");
+        const header = document.querySelector("#portal-header");
+        const nav = document.querySelector("#portal-nav");
+        const pageTitle = document.querySelector("#page-title");
+        const pageDescription = document.querySelector("#page-description");
+        const userName = document.querySelector("#user-name");
+        const userRole = document.querySelector("#user-role");
+        const roleEyebrow = document.querySelector("#role-eyebrow");
+        const pageNotice = document.querySelector("#page-notice");
+        const weekdayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        let client = null;
+        let currentUser = null;
+        let profile = null;
+        let students = [];
+        let staffProfiles = [];
+        let currentView = "overview";
+
+        const roleNames = {
+            headteacher: "Headteacher",
+            deputy_headteacher: "Deputy headteacher",
+            staff: "Staff",
+            parent: "Parent"
+        };
+
+        const viewNames = {
+            overview: "Overview",
+            students: "Students",
+            attendance: "Attendance",
+            fees: "Fees",
+            grades: "Grades",
+            timetable: "Timetable",
+            staff: "Staff and accounts"
+        };
+
+        const viewDescriptions = {
+            overview: "A private summary based on the records your account is allowed to see.",
+            students: "Student records are visible only to school leaders, assigned staff and linked parents.",
+            attendance: "Record and review attendance within your assigned classes or linked family.",
+            fees: "Fee details are restricted to school leaders and each student's linked parent.",
+            grades: "Assessment results are limited to assigned staff and linked parents.",
+            timetable: "Class schedules are shown only to school leaders and relevant classes or families.",
+            staff: "Manage accounts, class assignments and parent-to-student access."
+        };
+
+        function setNotice(element, message, isError) {
+            element.textContent = message || "";
+            element.classList.toggle("error", Boolean(isError));
+        }
+
+        function showAccessError(title, detail) {
+            loadingPanel.hidden = true;
+            header.hidden = true;
+            app.hidden = true;
+            errorTitle.textContent = title;
+            errorDetail.textContent = detail;
+            accessError.hidden = false;
+        }
+
+        function renderTable(table, headers, rows) {
+            table.replaceChildren();
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            headers.forEach((headerText) => {
+                const cell = document.createElement("th");
+                cell.scope = "col";
+                cell.textContent = headerText;
+                headerRow.append(cell);
+            });
+            thead.append(headerRow);
+            const tbody = document.createElement("tbody");
+
+            if (!rows.length) {
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.className = "empty-cell";
+                cell.colSpan = headers.length;
+                cell.textContent = "No records to show yet.";
+                row.append(cell);
+                tbody.append(row);
+            } else {
+                rows.forEach((values) => {
+                    const row = document.createElement("tr");
+                    values.forEach((value) => {
+                        const cell = document.createElement("td");
+                        cell.textContent = value == null || value === "" ? "—" : String(value);
+                        row.append(cell);
+                    });
+                    tbody.append(row);
+                });
+            }
+
+            table.append(thead, tbody);
+        }
+
+        function setOptions(select, options, placeholder, selectedValue) {
+            select.replaceChildren();
+            const first = document.createElement("option");
+            first.value = "";
+            first.textContent = placeholder;
+            select.append(first);
+            options.forEach((option) => {
+                const item = document.createElement("option");
+                item.value = option.value;
+                item.textContent = option.label;
+                if (option.value === selectedValue) {
+                    item.selected = true;
+                }
+                select.append(item);
+            });
+        }
+
+        function accessibleViews(role) {
+            if (role === "headteacher" || role === "deputy_headteacher") {
+                return ["overview", "students", "attendance", "fees", "grades", "timetable", "staff"];
+            }
+            if (role === "staff") {
+                return ["overview", "students", "attendance", "grades", "timetable"];
+            }
+            if (role === "parent") {
+                return ["overview", "students", "attendance", "fees", "grades", "timetable"];
+            }
+            return [];
+        }
+
+        function configureRoleUI() {
+            const views = accessibleViews(profile.role);
+            if (!views.length) {
+                throw new Error("This account has no school role. Ask the headteacher to assign one.");
+            }
+
+            nav.replaceChildren();
+            views.forEach((view) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "nav-button";
+                button.dataset.view = view;
+                button.textContent = viewNames[view];
+                button.addEventListener("click", () => openView(view));
+                nav.append(button);
+            });
+
+            document.querySelectorAll("[data-form]").forEach((section) => {
+                const formRole = section.dataset.form;
+                section.hidden = formRole === "leader" && !["headteacher", "deputy_headteacher"].includes(profile.role)
+                    || formRole === "teacher" && !["headteacher", "deputy_headteacher", "staff"].includes(profile.role)
+                    || formRole === "headteacher" && profile.role !== "headteacher";
+            });
+
+            if (profile.role === "staff") {
+                document.querySelector('[data-stat="fees"]').hidden = true;
+            }
+
+            const isParent = profile.role === "parent";
+            document.querySelector("#welcome-title").textContent = isParent ? "Your family portal" : "School management overview";
+            document.querySelector("#welcome-description").textContent = {
+                headteacher: "Manage school records, access, and day-to-day operations.",
+                deputy_headteacher: "Coordinate school records and support daily operations.",
+                staff: "View your assigned classes and update attendance and grades.",
+                parent: "View attendance, fees, grades and timetables for linked children."
+            }[profile.role];
+            roleEyebrow.textContent = roleNames[profile.role] + " portal";
+            userName.textContent = profile.full_name || currentUser.email || "School account";
+            userRole.textContent = roleNames[profile.role];
+
+            const quickActions = document.querySelector("#quick-actions");
+            quickActions.replaceChildren();
+            views.filter((view) => view !== "overview").slice(0, 4).forEach((view) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.textContent = "Open " + viewNames[view].toLowerCase();
+                button.addEventListener("click", () => openView(view));
+                quickActions.append(button);
+            });
+
+            document.querySelectorAll("[data-page]").forEach((page) => {
+                page.hidden = page.dataset.page !== "overview";
+            });
+            openView("overview");
+        }
+
+        function openView(view) {
+            currentView = view;
+            document.querySelectorAll("[data-page]").forEach((page) => {
+                page.hidden = page.dataset.page !== view;
+            });
+            document.querySelectorAll(".nav-button").forEach((button) => {
+                if (button.dataset.view === view) {
+                    button.setAttribute("aria-current", "page");
+                } else {
+                    button.removeAttribute("aria-current");
+                }
+            });
+            pageTitle.textContent = viewNames[view];
+            pageDescription.textContent = viewDescriptions[view];
+            setNotice(pageNotice, "", false);
+            loadView(view).catch((error) => {
+                setNotice(pageNotice, error.message || "Could not load this section.", true);
+            });
+        }
+
+        async function getCount(tableName) {
+            const { count, error } = await client.from(tableName).select("id", { count: "exact", head: true });
+            if (error) {
+                throw error;
+            }
+            return count || 0;
+        }
+
+        async function loadOverview() {
+            const [studentCount, attendanceCount, feeCount, gradeCount] = await Promise.all([
+                getCount("students"),
+                getCount("attendance"),
+                getCount("fee_records"),
+                getCount("grades")
+            ]);
+            document.querySelector("#stat-students").textContent = studentCount;
+            document.querySelector("#stat-attendance").textContent = attendanceCount;
+            document.querySelector("#stat-fees").textContent = feeCount;
+            document.querySelector("#stat-grades").textContent = gradeCount;
+        }
+
+        async function loadStudents() {
+            const { data, error } = await client.from("students")
+                .select("id,admission_no,full_name,class_name,is_active")
+                .order("class_name")
+                .order("full_name");
+            if (error) {
+                throw error;
+            }
+            students = data || [];
+            renderTable(document.querySelector("#students-table"),
+                ["Admission no.", "Student", "Class", "Status"],
+                students.map((student) => [student.admission_no, student.full_name, student.class_name, student.is_active ? "Active" : "Inactive"]));
+
+            const datalist = document.querySelector("#class-options");
+            datalist.replaceChildren();
+            [...new Set(students.map((student) => student.class_name))].forEach((className) => {
+                const option = document.createElement("option");
+                option.value = className;
+                datalist.append(option);
+            });
+
+            const studentOptions = students.map((student) => ({
+                value: student.id,
+                label: student.full_name + " · " + student.class_name
+            }));
+            ["#attendance-student", "#fee-student", "#grade-student", "#linked-student"].forEach((selector) => {
+                const select = document.querySelector(selector);
+                if (select) {
+                    setOptions(select, studentOptions, "Choose a student");
+                }
+            });
+        }
+
+        async function loadAttendance() {
+            const { data, error } = await client.from("attendance")
+                .select("attended_on,status,notes,students(full_name,class_name)")
+                .order("attended_on", { ascending: false })
+                .limit(100);
+            if (error) {
+                throw error;
+            }
+            renderTable(document.querySelector("#attendance-table"),
+                ["Date", "Student", "Class", "Status", "Notes"],
+                (data || []).map((row) => [row.attended_on, row.students && row.students.full_name, row.students && row.students.class_name, row.status, row.notes]));
+        }
+
+        async function loadFees() {
+            const { data, error } = await client.from("fee_records")
+                .select("academic_year,term,amount_due,amount_paid,due_date,notes,students(full_name,class_name)")
+                .order("academic_year", { ascending: false })
+                .limit(100);
+            if (error) {
+                throw error;
+            }
+            renderTable(document.querySelector("#fees-table"),
+                ["Student", "Class", "Year", "Term", "Due (KES)", "Paid (KES)", "Balance (KES)", "Due date"],
+                (data || []).map((row) => [
+                    row.students && row.students.full_name,
+                    row.students && row.students.class_name,
+                    row.academic_year,
+                    row.term,
+                    Number(row.amount_due).toFixed(2),
+                    Number(row.amount_paid).toFixed(2),
+                    (Number(row.amount_due) - Number(row.amount_paid)).toFixed(2),
+                    row.due_date
+                ]));
+        }
+
+        async function loadGrades() {
+            const { data, error } = await client.from("grades")
+                .select("subject,assessment,score,max_score,graded_on,students(full_name,class_name)")
+                .order("graded_on", { ascending: false })
+                .limit(100);
+            if (error) {
+                throw error;
+            }
+            renderTable(document.querySelector("#grades-table"),
+                ["Student", "Class", "Subject", "Assessment", "Score", "Date"],
+                (data || []).map((row) => [
+                    row.students && row.students.full_name,
+                    row.students && row.students.class_name,
+                    row.subject,
+                    row.assessment,
+                    Number(row.score) + " / " + Number(row.max_score),
+                    row.graded_on
+                ]));
+        }
+
+        async function loadTimetable() {
+            if (["headteacher", "deputy_headteacher"].includes(profile.role) && !staffProfiles.length) {
+                const { data: teachers, error: teacherError } = await client.from("profiles")
+                    .select("id,full_name,email")
+                    .eq("role", "staff")
+                    .order("full_name");
+                if (teacherError) {
+                    throw teacherError;
+                }
+                staffProfiles = teachers || [];
+                setOptions(document.querySelector("#timetable-teacher"),
+                    staffProfiles.map((teacher) => ({ value: teacher.id, label: teacher.full_name || teacher.email })),
+                    "No teacher assigned");
+            }
+            const { data, error } = await client.from("timetable")
+                .select("class_name,weekday,starts_at,ends_at,subject,room,teacher_id")
+                .order("weekday")
+                .order("starts_at");
+            if (error) {
+                throw error;
+            }
+            const profileNames = new Map(staffProfiles.map((item) => [item.id, item.full_name]));
+            renderTable(document.querySelector("#timetable-table"),
+                ["Day", "Class", "Time", "Subject", "Room", "Teacher"],
+                (data || []).map((row) => [
+                    weekdayNames[row.weekday],
+                    row.class_name,
+                    row.starts_at + "–" + row.ends_at,
+                    row.subject,
+                    row.room,
+                    profileNames.get(row.teacher_id)
+                ]));
+        }
+
+        async function loadStaff() {
+            if (!["headteacher", "deputy_headteacher"].includes(profile.role)) {
+                return;
+            }
+            const [{ data: profiles, error: profilesError }, { data: assignments, error: assignmentsError }, { data: links, error: linksError }] = await Promise.all([
+                client.from("profiles").select("id,email,full_name,role").order("full_name"),
+                client.from("staff_classes").select("id,staff_id,class_name,subject").order("class_name"),
+                client.from("parent_students").select("parent_id,student_id")
+            ]);
+            if (profilesError || assignmentsError || linksError) {
+                throw profilesError || assignmentsError || linksError;
+            }
+            staffProfiles = profiles || [];
+            const profileById = new Map(staffProfiles.map((item) => [item.id, item]));
+            const studentById = new Map(students.map((item) => [item.id, item]));
+            const staffMembers = staffProfiles.filter((item) => item.role === "staff");
+            const parentMembers = staffProfiles.filter((item) => item.role === "parent");
+
+            setOptions(document.querySelector("#assignment-staff"),
+                staffMembers.map((item) => ({ value: item.id, label: (item.full_name || item.email) + " · " + item.email })),
+                "Choose staff");
+            setOptions(document.querySelector("#parent-account"),
+                parentMembers.map((item) => ({ value: item.id, label: (item.full_name || item.email) + " · " + item.email })),
+                "Choose parent");
+            setOptions(document.querySelector("#role-user"),
+                staffProfiles.map((item) => ({ value: item.id, label: (item.full_name || item.email) + " · " + item.role })),
+                "Choose account");
+            setOptions(document.querySelector("#timetable-teacher"),
+                staffMembers.map((item) => ({ value: item.id, label: item.full_name || item.email })),
+                "No teacher assigned");
+
+            renderTable(document.querySelector("#staff-table"),
+                ["Staff member", "Email", "Role", "Classes / subjects"],
+                staffMembers.map((member) => [
+                    member.full_name,
+                    member.email,
+                    roleNames[member.role],
+                    assignments.filter((item) => item.staff_id === member.id).map((item) => item.class_name + " · " + item.subject).join(", ")
+                ]));
+            renderTable(document.querySelector("#parent-links-table"),
+                ["Parent", "Email", "Student", "Class"],
+                (links || []).map((link) => {
+                    const parent = profileById.get(link.parent_id);
+                    const student = studentById.get(link.student_id);
+                    return [parent && parent.full_name, parent && parent.email, student && student.full_name, student && student.class_name];
+                }));
+        }
+
+        async function loadView(view) {
+            if (view === "overview") {
+                await loadOverview();
+                return;
+            }
+            if (view === "students") {
+                await loadStudents();
+                return;
+            }
+            if (view === "attendance") {
+                await Promise.all([loadStudents(), loadAttendance()]);
+                return;
+            }
+            if (view === "fees") {
+                await Promise.all([loadStudents(), loadFees()]);
+                return;
+            }
+            if (view === "grades") {
+                await Promise.all([loadStudents(), loadGrades()]);
+                return;
+            }
+            if (view === "timetable") {
+                await Promise.all([loadStudents(), loadTimetable()]);
+                return;
+            }
+            if (view === "staff") {
+                await Promise.all([loadStudents(), loadStaff()]);
+            }
+        }
+
+        async function refreshCurrentView() {
+            await loadView(currentView);
+            if (currentView !== "overview") {
+                await loadOverview();
+            }
+        }
+
+        function handleForm(formId, noticeId, submit) {
+            document.querySelector("#" + formId).addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const button = form.querySelector('button[type="submit"]');
+                button.disabled = true;
+                setNotice(document.querySelector("#" + noticeId), "", false);
+                try {
+                    await submit(new FormData(form));
+                    form.reset();
+                    setNotice(document.querySelector("#" + noticeId), "Saved successfully.", false);
+                    await refreshCurrentView();
+                } catch (error) {
+                    setNotice(document.querySelector("#" + noticeId), error.message || "The record could not be saved.", true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+        }
+
+        function value(formData, name) {
+            return String(formData.get(name) || "").trim();
+        }
+
+        handleForm("student-form", "student-notice", async (data) => {
+            const { error } = await client.from("students").insert({
+                admission_no: value(data, "admission_no"),
+                full_name: value(data, "full_name"),
+                class_name: value(data, "class_name")
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("attendance-form", "attendance-notice", async (data) => {
+            const { error } = await client.from("attendance").insert({
+                student_id: value(data, "student_id"),
+                attended_on: value(data, "attended_on"),
+                status: value(data, "status"),
+                notes: value(data, "notes"),
+                recorded_by: currentUser.id
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("fee-form", "fee-notice", async (data) => {
+            const { error } = await client.from("fee_records").upsert({
+                student_id: value(data, "student_id"),
+                academic_year: value(data, "academic_year"),
+                term: value(data, "term"),
+                amount_due: Number(value(data, "amount_due")),
+                amount_paid: Number(value(data, "amount_paid")),
+                due_date: value(data, "due_date") || null,
+                notes: value(data, "notes"),
+                updated_by: currentUser.id
+            }, { onConflict: "student_id,academic_year,term" });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("grade-form", "grade-notice", async (data) => {
+            const score = Number(value(data, "score"));
+            const maxScore = Number(value(data, "max_score"));
+            if (score > maxScore) {
+                throw new Error("Score cannot be greater than the maximum score.");
+            }
+            const { error } = await client.from("grades").insert({
+                student_id: value(data, "student_id"),
+                subject: value(data, "subject"),
+                assessment: value(data, "assessment"),
+                score,
+                max_score: maxScore,
+                graded_on: value(data, "graded_on"),
+                recorded_by: currentUser.id
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("timetable-form", "timetable-notice", async (data) => {
+            const { error } = await client.from("timetable").insert({
+                class_name: value(data, "class_name"),
+                weekday: Number(value(data, "weekday")),
+                starts_at: value(data, "starts_at"),
+                ends_at: value(data, "ends_at"),
+                subject: value(data, "subject"),
+                room: value(data, "room"),
+                teacher_id: value(data, "teacher_id") || null
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("assignment-form", "assignment-notice", async (data) => {
+            const { error } = await client.from("staff_classes").insert({
+                staff_id: value(data, "staff_id"),
+                class_name: value(data, "class_name"),
+                subject: value(data, "subject")
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("role-form", "role-notice", async (data) => {
+            const { error } = await client.rpc("set_profile_role", {
+                target_user: value(data, "target_user"),
+                next_role: value(data, "next_role")
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        handleForm("parent-link-form", "parent-link-notice", async (data) => {
+            const { error } = await client.from("parent_students").insert({
+                parent_id: value(data, "parent_id"),
+                student_id: value(data, "student_id")
+            });
+            if (error) {
+                throw error;
+            }
+        });
+
+        async function initializePortal() {
+            const url = window.BADI_SUPABASE_URL;
+            const key = window.BADI_SUPABASE_ANON_KEY;
+            if (!url || !key) {
+                setupRequired.hidden = false;
+                return;
+            }
+            if (!window.supabase || typeof window.supabase.createClient !== "function") {
+                showAccessError("Sign-in service unavailable", "Check your internet connection and reload the portal.");
+                return;
+            }
+
+            loadingPanel.hidden = false;
+            client = window.supabase.createClient(url, key);
+            const { data: sessionData, error: sessionError } = await client.auth.getSession();
+            if (sessionError) {
+                showAccessError("Could not verify your account", sessionError.message);
+                return;
+            }
+            if (!sessionData.session) {
+                window.location.replace("login.html");
+                return;
+            }
+
+            currentUser = sessionData.session.user;
+            const { data: profileData, error: profileError } = await client.from("profiles")
+                .select("id,email,full_name,role")
+                .eq("id", currentUser.id)
+                .single();
+            if (profileError || !profileData) {
+                showAccessError("Your school profile is not ready", profileError ? profileError.message : "Ask the headteacher to set up your account.");
+                return;
+            }
+
+            profile = profileData;
+            loadingPanel.hidden = true;
+            header.hidden = false;
+            app.hidden = false;
+            configureRoleUI();
+            const localNow = new Date();
+            const localDate = new Date(localNow.getTime() - localNow.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+            document.querySelector("#attendance-date").value = localDate;
+            document.querySelector("#grade-date").value = localDate;
+            document.querySelector("#fee-year").value = String(new Date().getFullYear());
+        }
+
+        document.querySelector("#sign-out").addEventListener("click", async (event) => {
+            const button = event.currentTarget;
+            button.disabled = true;
+            try {
+                const { error } = await client.auth.signOut();
+                if (error) {
+                    throw error;
+                }
+                window.location.replace("login.html");
+            } catch (error) {
+                button.disabled = false;
+                setNotice(pageNotice, error.message || "Sign-out failed.", true);
+            }
+        });
+
+        initializePortal().catch((error) => {
+            showAccessError("Portal error", error.message || "The portal could not load.");
+        });
+    </script>
+</body>
+</html>

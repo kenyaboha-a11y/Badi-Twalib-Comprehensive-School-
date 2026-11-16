@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to the Badi Twalib Comprehensive School parent and staff portal.">
+    <title>Sign in · Badi Twalib Comprehensive School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --background: #faf9f6;
+            --foreground: #153135;
+            --primary: #143b3d;
+            --accent: #aa762d;
+            --muted: #647274;
+            --border: #e4e0d8;
+            --heading: "Fraunces", Georgia, serif;
+            --body: "Inter", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            grid-template-rows: auto 1fr auto;
+            margin: 0;
+            background:
+                radial-gradient(80% 60% at 0% 0%, rgb(170 118 45 / 8%), transparent 62%),
+                var(--background);
+            color: var(--foreground);
+            font-family: var(--body);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #c9974e;
+            outline-offset: 3px;
+        }
+
+        .topbar,
+        .footer {
+            border-bottom: 1px solid rgb(228 224 216 / 75%);
+            background: rgb(250 249 246 / 92%);
+        }
+
+        .topbar-inner,
+        .footer-inner {
+            display: flex;
+            width: min(100% - 32px, 1152px);
+            min-height: 64px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-inline: auto;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border-radius: 16px;
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .brand-mark svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .brand-name {
+            display: block;
+            font-family: var(--heading);
+            font-size: 16px;
+            line-height: 1.15;
+        }
+
+        .brand-subtitle {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .back-link {
+            color: #536365;
+            font-size: 13px;
+        }
+
+        .back-link:hover,
+        .form-link:hover {
+            color: var(--accent);
+        }
+
+        main {
+            display: grid;
+            align-content: center;
+            justify-items: center;
+            padding: 48px 16px;
+        }
+
+        .login-card {
+            width: min(100%, 440px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: #fff;
+            box-shadow: 0 18px 45px -35px rgb(21 38 40 / 40%);
+            padding: 32px;
+        }
+
+        .card-mark {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            place-items: center;
+            border-radius: 18px;
+            background: #edf2ef;
+            color: var(--primary);
+        }
+
+        .card-mark svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        h1 {
+            margin: 20px 0 2px;
+            font-family: var(--heading);
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: -.025em;
+            line-height: 1.2;
+        }
+
+        .intro {
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .google-button {
+            display: inline-flex;
+            width: 100%;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            color: var(--foreground);
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .google-button:hover {
+            background: #f7f6f2;
+        }
+
+        .google-button:disabled {
+            cursor: not-allowed;
+            opacity: .6;
+        }
+
+        .google-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            height: 1px;
+            flex: 1;
+            background: var(--border);
+            content: "";
+        }
+
+        .notice {
+            margin: 0 0 18px;
+            border: 1px solid #e8c992;
+            border-radius: 10px;
+            background: #fff8eb;
+            color: #654516;
+            font-size: 13px;
+            padding: 12px 14px;
+        }
+
+        .notice[hidden] {
+            display: none;
+        }
+
+        .field[hidden] {
+            display: none;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            min-height: 44px;
+            border: 1px solid #d5d9d4;
+            border-radius: 9px;
+            background: #fff;
+            color: var(--foreground);
+            font: inherit;
+            font-size: 14px;
+            padding: 0 12px;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            outline: 3px solid rgb(20 59 61 / 10%);
+            outline-offset: 1px;
+        }
+
+        .password-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .form-link,
+        .mode-button {
+            color: #536365;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .submit-button,
+        .sign-out-button {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 18px;
+            transition: background .2s ease, opacity .2s ease;
+        }
+
+        .submit-button:hover,
+        .sign-out-button:hover {
+            background: #205458;
+        }
+
+        .submit-button:disabled,
+        .sign-out-button:disabled {
+            cursor: wait;
+            opacity: .65;
+        }
+
+        .form-footer {
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .mode-button {
+            border: 0;
+            background: none;
+            color: var(--primary);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            padding: 0;
+        }
+
+        .form-link {
+            border: 0;
+            background: none;
+            cursor: pointer;
+            font: inherit;
+            padding: 0;
+        }
+
+        .status {
+            min-height: 0;
+            margin: 0;
+            color: #9c3d31;
+            font-size: 13px;
+        }
+
+        .status:empty {
+            display: none;
+        }
+
+        .signed-in {
+            display: grid;
+            gap: 15px;
+        }
+
+        .signed-in[hidden] {
+            display: none;
+        }
+
+        .signed-in p {
+            margin: 0;
+            color: #536365;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            border-bottom: 0;
+        }
+
+        .footer-inner {
+            min-height: 56px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 25px 21px;
+            }
+
+            h1 {
+                font-size: 29px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="school.html" aria-label="Badi Twalib Comprehensive School home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m2 9 10-5 10 5-10 5L2 9Z"></path>
+                        <path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path>
+                    </svg>
+                </span>
+                <span>
+                    <span class="brand-name">Badi Twalib</span>
+                    <span class="brand-subtitle">Comprehensive School</span>
+                </span>
+            </a>
+            <a class="back-link" href="school.html">Back to school</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="login-card" aria-labelledby="page-title">
+            <div class="card-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="10" width="18" height="11" rx="2"></rect>
+                    <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+                    <path d="M12 14v3"></path>
+                </svg>
+            </div>
+            <h1 id="page-title">Welcome back</h1>
+            <p class="intro" id="intro">Log in to your school account</p>
+            <p class="notice" id="configuration-notice" role="status" hidden></p>
+            <p class="status" id="status-message" role="status" aria-live="polite"></p>
+
+            <button class="google-button" id="google-sign-in" type="button">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                    <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.4 0 24 0 14.6 0 6.4 5.4 2.4 13.4l7.9 6.1C12.2 13.6 17.6 9.5 24 9.5Z"></path>
+                    <path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.7 6.9l7.6 5.9c4.4-4.1 6.8-10.1 6.8-17.3Z"></path>
+                    <path fill="#FBBC05" d="M10.3 28.5c-.5-1.4-.8-2.9-.8-4.5s.3-3.1.8-4.5l-7.9-6.1C.9 16.8 0 20.1 0 24s.9 7.2 2.4 10.6l7.9-6.1Z"></path>
+                    <path fill="#34A853" d="M24 48c6.4 0 11.8-2.1 15.7-5.8l-7.6-5.9c-2.1 1.4-4.8 2.2-8.1 2.2-6.4 0-11.8-4.1-13.7-9.9l-7.9 6.1C6.4 42.6 14.6 48 24 48Z"></path>
+                </svg>
+                Continue with Google
+            </button>
+            <div class="divider" aria-hidden="true">or continue with email</div>
+
+            <form id="auth-form">
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </div>
+                <div class="field" id="password-field">
+                    <div class="password-row">
+                        <label for="password">Password</label>
+                        <button class="form-link" id="forgot-password" type="button">Forgot password?</button>
+                    </div>
+                    <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="8" required>
+                </div>
+                <button class="submit-button" id="submit-button" type="submit">Log in</button>
+            </form>
+
+            <div class="signed-in" id="signed-in" hidden>
+                <p id="signed-in-message"></p>
+                <a class="submit-button" href="portal.html">Open your portal</a>
+                <button class="sign-out-button" id="sign-out" type="button">Sign out</button>
+            </div>
+
+            <p class="form-footer" id="form-footer">
+                <span id="register-prompt">
+                    Don't have an account?
+                    <button class="mode-button" id="create-account" type="button">Create one</button>
+                </span>
+                <span id="login-prompt" hidden>
+                    Already have an account?
+                    <button class="mode-button" id="back-to-login" type="button">Log in</button>
+                </span>
+                <span id="reset-prompt" hidden>
+                    Remembered your password?
+                    <button class="mode-button" id="back-from-reset" type="button">Log in</button>
+                </span>
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>Badi Twalib Comprehensive School</span>
+            <a href="school.html">Mombasa, Kenya · Elimu ni Utajiri</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="auth-config.js"></script>
+    <script>
+        const form = document.querySelector("#auth-form");
+        const emailInput = document.querySelector("#email");
+        const passwordInput = document.querySelector("#password");
+        const passwordField = document.querySelector("#password-field");
+        const submitButton = document.querySelector("#submit-button");
+        const statusMessage = document.querySelector("#status-message");
+        const configurationNotice = document.querySelector("#configuration-notice");
+        const createAccountButton = document.querySelector("#create-account");
+        const registerPrompt = document.querySelector("#register-prompt");
+        const loginPrompt = document.querySelector("#login-prompt");
+        const backToLoginButton = document.querySelector("#back-to-login");
+        const resetPrompt = document.querySelector("#reset-prompt");
+        const backFromResetButton = document.querySelector("#back-from-reset");
+        const forgotPasswordButton = document.querySelector("#forgot-password");
+        const formFooter = document.querySelector("#form-footer");
+        const signedInPanel = document.querySelector("#signed-in");
+        const signedInMessage = document.querySelector("#signed-in-message");
+        const signOutButton = document.querySelector("#sign-out");
+        const googleSignInButton = document.querySelector("#google-sign-in");
+        const pageTitle = document.querySelector("#page-title");
+        const intro = document.querySelector("#intro");
+        let mode = "login";
+        let authClient = null;
+
+        function showStatus(message, isError) {
+            statusMessage.textContent = message;
+            statusMessage.style.color = isError ? "#9c3d31" : "#286142";
+        }
+
+        function setMode(nextMode) {
+            mode = nextMode;
+            statusMessage.textContent = "";
+            passwordField.hidden = mode === "reset";
+            passwordInput.required = mode !== "reset";
+            forgotPasswordButton.hidden = mode !== "login";
+            createAccountButton.hidden = mode === "reset";
+            formFooter.hidden = false;
+            registerPrompt.hidden = mode !== "login";
+            loginPrompt.hidden = mode !== "register";
+            resetPrompt.hidden = mode !== "reset";
+
+            if (mode === "register") {
+                pageTitle.textContent = "Create your account";
+                intro.textContent = "Register for the school portal";
+                submitButton.textContent = "Create account";
+                passwordInput.autocomplete = "new-password";
+                return;
+            }
+
+            if (mode === "reset") {
+                pageTitle.textContent = "Reset your password";
+                intro.textContent = "We'll send a password reset link to your email";
+                submitButton.textContent = "Send reset link";
+                passwordInput.autocomplete = "new-password";
+                return;
+            }
+
+            pageTitle.textContent = "Welcome back";
+            intro.textContent = "Log in to your school account";
+            submitButton.textContent = "Log in";
+            passwordInput.autocomplete = "current-password";
+        }
+
+        function showSignedIn(user) {
+            form.hidden = true;
+            formFooter.hidden = true;
+            signedInPanel.hidden = false;
+            signedInMessage.textContent = "You are signed in as " + user.email + ".";
+            statusMessage.textContent = "";
+        }
+
+        function showLoginForm() {
+            form.hidden = false;
+            signedInPanel.hidden = true;
+            formFooter.hidden = false;
+        }
+
+        function initializeAuth() {
+            const url = window.BADI_SUPABASE_URL;
+            const key = window.BADI_SUPABASE_ANON_KEY;
+
+            if (!url || !key) {
+                configurationNotice.textContent = "Login is not connected yet. Add your Supabase project URL and public anon key to auth-config.js to enable accounts.";
+                configurationNotice.hidden = false;
+                submitButton.disabled = true;
+                googleSignInButton.disabled = true;
+                return;
+            }
+
+            if (!window.supabase || typeof window.supabase.createClient !== "function") {
+                configurationNotice.textContent = "The sign-in service could not load. Check your internet connection and reload this page.";
+                configurationNotice.hidden = false;
+                submitButton.disabled = true;
+                googleSignInButton.disabled = true;
+                return;
+            }
+
+            authClient = window.supabase.createClient(url, key);
+            authClient.auth.getSession().then(({ data, error }) => {
+                if (error) {
+                    showStatus(error.message, true);
+                } else if (data.session) {
+                    showSignedIn(data.session.user);
+                }
+            });
+        }
+
+        createAccountButton.addEventListener("click", () => setMode("register"));
+        backToLoginButton.addEventListener("click", () => setMode("login"));
+        backFromResetButton.addEventListener("click", () => setMode("login"));
+        forgotPasswordButton.addEventListener("click", () => setMode("reset"));
+
+        googleSignInButton.addEventListener("click", async () => {
+            if (!authClient) {
+                showStatus("Connect a Supabase project before signing in.", true);
+                return;
+            }
+
+            if (window.location.protocol === "file:") {
+                showStatus("Google sign-in needs this site served from localhost. Open the folder with VS Code Live Server and try again.", true);
+                return;
+            }
+
+            googleSignInButton.disabled = true;
+            try {
+                const { error } = await authClient.auth.signInWithOAuth({
+                    provider: "google",
+                    options: {
+                        redirectTo: window.location.origin + window.location.pathname
+                    }
+                });
+                if (error) {
+                    throw error;
+                }
+            } catch (error) {
+                showStatus(error.message || "Google sign-in failed. Please try again.", true);
+                googleSignInButton.disabled = false;
+            }
+        });
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            if (!authClient) {
+                showStatus("Connect a Supabase project before signing in.", true);
+                return;
+            }
+
+            submitButton.disabled = true;
+            statusMessage.textContent = "";
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            try {
+                if (mode === "reset") {
+                    const { error } = await authClient.auth.resetPasswordForEmail(email);
+                    if (error) {
+                        throw error;
+                    }
+                    showStatus("If an account exists for this email, a password reset link has been sent.", false);
+                    return;
+                }
+
+                if (mode === "register") {
+                    const { data, error } = await authClient.auth.signUp({ email, password });
+                    if (error) {
+                        throw error;
+                    }
+                    if (data.session) {
+                        showSignedIn(data.user);
+                    } else {
+                        showStatus("Check your email to confirm your new account, then log in.", false);
+                    }
+                    return;
+                }
+
+                const { data, error } = await authClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    throw error;
+                }
+                showSignedIn(data.user);
+            } catch (error) {
+                showStatus(error.message || "Sign-in failed. Please try again.", true);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        signOutButton.addEventListener("click", async () => {
+            if (!authClient) {
+                return;
+            }
+
+            signOutButton.disabled = true;
+            try {
+                const { error } = await authClient.auth.signOut();
+                if (error) {
+                    throw error;
+                }
+                showLoginForm();
+                setMode("login");
+                showStatus("You have signed out.", false);
+            } catch (error) {
+                showStatus(error.message || "Sign-out failed. Please try again.", true);
+            } finally {
+                signOutButton.disabled = false;
+            }
+        });
+
+        initializeAuth();
+    </script>
+</body>
+</html>

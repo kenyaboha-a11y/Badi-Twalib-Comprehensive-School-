@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Badi Twalib Comprehensive School, Mombasa — where brilliance meets the horizon.">
+    <title>Badi Twalib Comprehensive School · Mombasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --background: #faf9f6;
+            --foreground: #153135;
+            --primary: #143b3d;
+            --primary-foreground: #faf9f6;
+            --accent: #aa762d;
+            --accent-light: #f3eadc;
+            --muted: #647274;
+            --border: #e4e0d8;
+            --card: #ffffff;
+            --heading: "Fraunces", Georgia, serif;
+            --body: "Inter", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 84px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--body);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #c9974e;
+            outline-offset: 3px;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgb(228 224 216 / 75%);
+            background: rgb(250 249 246 / 92%);
+            backdrop-filter: blur(14px);
+        }
+
+        .header-inner,
+        main,
+        .footer-inner {
+            width: min(100% - 32px, 1152px);
+            margin-inline: auto;
+        }
+
+        .header-inner {
+            display: flex;
+            min-height: 64px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border-radius: 16px;
+            background: var(--primary);
+            color: white;
+        }
+
+        .brand-mark svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .brand-name {
+            display: block;
+            font-family: var(--heading);
+            font-size: 16px;
+            line-height: 1.15;
+        }
+
+        .brand-subtitle {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: .18em;
+            line-height: 1.6;
+            text-transform: uppercase;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .desktop-nav a,
+        .footer-links a {
+            color: #536365;
+            font-size: 13px;
+            transition: color .2s ease;
+        }
+
+        .desktop-nav a:hover,
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sign-in {
+            display: inline-flex;
+            min-height: 38px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: var(--primary);
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 17px;
+            transition: background .2s ease;
+        }
+
+        .sign-in:hover,
+        .button-primary:hover {
+            background: #205458;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            color: var(--foreground);
+            cursor: pointer;
+        }
+
+        .menu-toggle svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .mobile-nav {
+            display: none;
+            border-top: 1px solid var(--border);
+            padding: 8px 16px 16px;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 9px 4px;
+            color: #536365;
+            font-size: 14px;
+        }
+
+        main {
+            display: grid;
+            gap: 24px;
+            padding-block: 28px 36px;
+        }
+
+        .hero {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-height: 460px;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgb(20 59 61 / 15%);
+            border-radius: 32px;
+            background: var(--primary);
+        }
+
+        .hero::before {
+            position: absolute;
+            z-index: -2;
+            inset: 0;
+            background: url("https://media.base44.com/images/public/6a4d3d41d4c1251fd4fd9ed1/1ea5e54c5_images1.jpg") center 48% / cover;
+            content: "";
+        }
+
+        .hero::after {
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            background: linear-gradient(0deg, rgb(15 53 55 / 98%) 0%, rgb(15 53 55 / 78%) 56%, rgb(15 53 55 / 22%) 100%);
+            content: "";
+        }
+
+        .hero-content {
+            max-width: 760px;
+            padding: 76px 40px;
+            color: var(--primary-foreground);
+        }
+
+        .kicker {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .hero .kicker {
+            color: #d7a550;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--heading);
+            font-weight: 500;
+        }
+
+        h1 {
+            max-width: 720px;
+            margin: 16px 0 0;
+            font-size: 30px;
+            letter-spacing: -.035em;
+            line-height: 1.06;
+        }
+
+        .hero-copy {
+            max-width: 620px;
+            margin: 18px 0 0;
+            color: rgb(255 255 255 / 84%);
+            font-size: 16px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            font-family: var(--body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 22px;
+            transition: background .2s ease, border-color .2s ease;
+        }
+
+        .button-primary {
+            border: 1px solid var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero .button-primary {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #fffaf1;
+        }
+
+        .hero .button-primary:hover {
+            background: #946323;
+        }
+
+        .button-outline {
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--foreground);
+        }
+
+        .hero .button-outline {
+            border-color: rgb(255 255 255 / 42%);
+            color: white;
+        }
+
+        .hero .button-outline:hover {
+            background: rgb(255 255 255 / 10%);
+        }
+
+        .panel {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--card);
+            box-shadow: 0 1px 2px rgb(21 38 40 / 4%), 0 18px 40px -32px rgb(21 38 40 / 28%);
+        }
+
+        .story {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            align-items: center;
+            gap: 32px;
+            padding: 32px;
+        }
+
+        .section-heading {
+            margin: 10px 0 0;
+            font-size: clamp(28px, 4vw, 36px);
+            letter-spacing: -.025em;
+            line-height: 1.16;
+        }
+
+        .story-copy {
+            margin: 17px 0 0;
+            color: #536365;
+            font-size: 14px;
+        }
+
+        .gold-rule {
+            height: 1px;
+            margin: 22px 0;
+            background: linear-gradient(90deg, transparent, rgb(170 118 45 / 55%), transparent);
+        }
+
+        .achievements-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 16px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .achievements-list li {
+            position: relative;
+            padding-left: 15px;
+            color: #47585a;
+            font-size: 13px;
+        }
+
+        .achievements-list li::before {
+            position: absolute;
+            top: .68em;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            content: "";
+        }
+
+        .story-image {
+            display: block;
+            width: 100%;
+            height: 320px;
+            border-radius: 17px;
+            object-fit: cover;
+        }
+
+        .academics {
+            display: grid;
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .section-intro {
+            max-width: 650px;
+        }
+
+        .programmes {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .programme-card {
+            padding: 23px;
+        }
+
+        .programme-number {
+            margin: 0;
+            color: var(--accent);
+            font-family: var(--heading);
+            font-size: 15px;
+        }
+
+        .programme-card h3 {
+            margin: 9px 0 8px;
+            font-size: 20px;
+            line-height: 1.2;
+        }
+
+        .programme-card p:last-child {
+            margin: 0;
+            color: #536365;
+            font-size: 13px;
+        }
+
+        .achievement-feature {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+        }
+
+        .project-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 440px;
+            object-fit: cover;
+        }
+
+        .feature-content {
+            padding: 32px;
+        }
+
+        .feature-intro {
+            margin: 13px 0 0;
+            color: #536365;
+            font-size: 14px;
+        }
+
+        .awards {
+            display: grid;
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .award {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #f3f0e9;
+            padding: 16px;
+        }
+
+        .award-rank {
+            margin: 0;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .award h3 {
+            margin: 4px 0 5px;
+            font-size: 19px;
+            line-height: 1.25;
+        }
+
+        .award p:last-child {
+            margin: 0;
+            color: #536365;
+            font-size: 12px;
+        }
+
+        .partners {
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .admissions {
+            padding: 40px;
+            background:
+                radial-gradient(120% 90% at 8% 0%, rgb(170 118 45 / 10%), transparent 58%),
+                radial-gradient(90% 120% at 100% 10%, rgb(46 100 107 / 7%), transparent 60%),
+                linear-gradient(180deg, #fefdfb 0%, #f8f6f2 100%);
+        }
+
+        .admissions-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .admissions-copy {
+            max-width: 570px;
+            margin: 14px 0 0;
+            color: #536365;
+            font-size: 14px;
+        }
+
+        .admissions-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 11px;
+            margin-top: 23px;
+        }
+
+        .contact-card {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgb(255 255 255 / 82%);
+            padding: 21px;
+        }
+
+        .field-label {
+            margin: 0 0 12px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin-top: 9px;
+            overflow-wrap: anywhere;
+            font-size: 13px;
+        }
+
+        .contact-link svg {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 16px;
+            color: var(--accent);
+        }
+
+        .contact-place {
+            margin: 18px 0 0;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-block: 24px;
+        }
+
+        .footer-title {
+            margin: 0;
+            font-family: var(--heading);
+            font-size: 16px;
+        }
+
+        .footer-tagline {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .desktop-nav {
+                gap: 16px;
+            }
+
+            .programmes {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 640px) {
+            h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+            }
+
+            .mobile-nav.is-open {
+                display: block;
+            }
+
+            main {
+                gap: 18px;
+                padding-top: 18px;
+            }
+
+            .hero {
+                min-height: 460px;
+                border-radius: 26px;
+            }
+
+            .hero-content {
+                padding: 54px 25px;
+            }
+
+            .hero-copy {
+                font-size: 15px;
+            }
+
+            .story,
+            .achievement-feature,
+            .admissions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story {
+                gap: 22px;
+                padding: 23px;
+            }
+
+            .story-image {
+                height: 260px;
+            }
+
+            .project-image {
+                height: 260px;
+                min-height: 0;
+            }
+
+            .feature-content {
+                padding: 24px;
+            }
+
+            .admissions {
+                padding: 26px 23px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .header-inner,
+            main,
+            .footer-inner {
+                width: min(100% - 24px, 1152px);
+            }
+
+            .brand-subtitle {
+                font-size: 9px;
+            }
+
+            .sign-in {
+                min-height: 36px;
+                padding-inline: 13px;
+            }
+
+            .hero {
+                min-height: 420px;
+            }
+
+            .hero-content {
+                padding-inline: 21px;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .hero-actions .button {
+                width: 100%;
+            }
+
+            .achievements-list,
+            .programmes {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                gap: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="#top" aria-label="Badi Twalib Comprehensive School home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m2 9 10-5 10 5-10 5L2 9Z"></path>
+                        <path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"></path>
+                    </svg>
+                </span>
+                <span>
+                    <span class="brand-name">Badi Twalib</span>
+                    <span class="brand-subtitle">Comprehensive School</span>
+                </span>
+            </a>
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="#story">Our story</a>
+                <a href="#academics">Academics</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#admissions">Admissions</a>
+            </nav>
+            <div class="header-actions">
+                <a class="sign-in" href="login.html">Sign in</a>
+                <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+            <a href="#story">Our story</a>
+            <a href="#academics">Academics</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#admissions">Admissions</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="top">
+            <div class="hero-content">
+                <p class="kicker">Mombasa, Kenya · Elimu ni Utajiri</p>
+                <h1>Badi Twalib Comprehensive School</h1>
+                <p class="hero-copy">Where brilliance meets the horizon — Nurturing the leaders, innovators and changemakers of tomorrow.</p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#admissions">Begin your journey</a>
+                    <a class="button button-outline" href="#academics">Explore programmes</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel story" id="story">
+            <div>
+                <p class="kicker">Our story</p>
+                <h2 class="section-heading">A legacy of excellence on the Kenyan coast</h2>
+                <p class="story-copy">Nestled in the vibrant heart of Mombasa, Badi Twalib Comprehensive School has been shaping exceptional young minds for nine years. Our name — meaning seekers of knowledge — defines our essence: rigorous academics, strong facilities and a nurturing community where every child's seed of greatness can blossom.</p>
+                <p class="story-copy">From the classrooms to the playing fields, from the science labs to the stage, our learners are taught not just to succeed, but to lead with purpose and serve with heart.</p>
+                <div class="gold-rule"></div>
+                <ul class="achievements-list">
+                    <li>National Science Olympiad Champions 2025</li>
+                    <li>Best Comprehensive School Award — Coast Region 2025</li>
+                    <li>Regional Finalists, Under-16 Basketball</li>
+                    <li>1,000,000 mangroves planted through the 4K Club</li>
+                </ul>
+            </div>
+            <img class="story-image" src="https://media.base44.com/images/public/6a4d3d41d4c1251fd4fd9ed1/4700f2f25_generated_afa70cf2.png" alt="The Badi Twalib school campus">
+        </section>
+
+        <section class="academics" id="academics">
+            <div class="section-intro">
+                <p class="kicker">Academic programmes</p>
+                <h2 class="section-heading">Four pillars of a comprehensive education</h2>
+            </div>
+            <div class="programmes">
+                <article class="panel programme-card">
+                    <p class="programme-number">01</p>
+                    <h3>Academic Rigour</h3>
+                    <p>A demanding curriculum across Sciences, Humanities, Technical Arts and Sports that prepares learners for national examinations and global opportunity.</p>
+                </article>
+                <article class="panel programme-card">
+                    <p class="programme-number">02</p>
+                    <h3>Global Citizenship</h3>
+                    <p>An international perspective rooted in the heritage, language and hospitality of the Kenyan coast.</p>
+                </article>
+                <article class="panel programme-card">
+                    <p class="programme-number">03</p>
+                    <h3>Character Formation</h3>
+                    <p>Integrity, resilience and compassion — the foundation of every great leader we send into the world.</p>
+                </article>
+                <article class="panel programme-card">
+                    <p class="programme-number">04</p>
+                    <h3>Innovation &amp; Creativity</h3>
+                    <p>Original thinking through five Code Clubs, robotics, hands-on projects and the performing arts.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel achievement-feature" id="achievements">
+            <img class="project-image" src="https://media.base44.com/images/public/6a4d3d41d4c1251fd4fd9ed1/658926913_footbridge2.png" alt="Learner-built Smart Footbridge robotics project">
+            <div class="feature-content">
+                <p class="kicker">Achievements</p>
+                <h2 class="section-heading">Innovators on the regional stage</h2>
+                <p class="feature-intro">Our five Code Clubs took Badi Twalib to the Code Innovators Festival — and brought home the hardware.</p>
+                <div class="awards">
+                    <article class="award">
+                        <p class="award-rank">1st position</p>
+                        <h3>Robotics &amp; Line Following · Smart Footbridge</h3>
+                        <p>An autonomous robotics system engineered to navigate line-following challenges, showcasing precision engineering and algorithmic problem solving.</p>
+                    </article>
+                    <article class="award">
+                        <p class="award-rank">3rd position</p>
+                        <h3>Web Development · EduSecure</h3>
+                        <p>A purpose-built educational platform designed to make learning secure, accessible and engaging for every learner.</p>
+                    </article>
+                </div>
+                <p class="partners">Working with Ministry of Education, Raspberry Pi Foundation, Communications Authority of Kenya, Oracle and more.</p>
+            </div>
+        </section>
+
+        <section class="panel admissions" id="admissions">
+            <div class="admissions-grid">
+                <div>
+                    <p class="kicker">Admissions</p>
+                    <h2 class="section-heading">Begin the journey</h2>
+                    <p class="admissions-copy">Applications are open for the coming term. Apply online, follow your application, pay fees and download report cards — all from the parent portal.</p>
+                    <div class="admissions-actions">
+                        <a class="button button-primary" href="login.html">Apply for a place</a>
+                        <a class="button button-outline" href="mailto:hoi-baditwalibprimaryschool-mba@mwalimu.tsc.go.ke">Talk to admissions</a>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <p class="field-label">Admissions office</p>
+                    <a class="contact-link" href="tel:+254104681585">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"></path></svg>
+                        <span>+254 104 681 585</span>
+                    </a>
+                    <a class="contact-link" href="mailto:hoi-baditwalibprimaryschool-mba@mwalimu.tsc.go.ke">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+                        <span>hoi-baditwalibprimaryschool-mba@mwalimu.tsc.go.ke</span>
+                    </a>
+                    <p class="contact-place">Mombasa, Kenya</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <p class="footer-title">Badi Twalib Comprehensive School</p>
+                <p class="footer-tagline">Mombasa, Kenya · Elimu ni Utajiri</p>
+            </div>
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#story">Our story</a>
+                <a href="#academics">Academics</a>
+                <a href="#admissions">Admissions</a>
+                <a href="login.html">Portal sign in</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mobileNav = document.querySelector("#mobile-nav");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+            menuToggle.setAttribute("aria-expanded", String(!isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+            mobileNav.classList.toggle("is-open", !isOpen);
+        });
+
+        mobileNav.addEventListener("click", (event) => {
+            if (event.target.closest("a")) {
+                mobileNav.classList.remove("is-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open menu");
+            }
+        });
+    </script>
+</body>
+</html>
